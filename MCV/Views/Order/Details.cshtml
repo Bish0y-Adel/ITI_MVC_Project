@@ -1,0 +1,88 @@
+@model Entities.Models.Order
+@{
+    ViewData["Title"] = $"Order #{Model.OrderNumber}";
+
+    var badgeClass = Model.Status switch
+    {
+        Entities.Models.OrderStatus.Pending => "bg-warning text-dark",
+        Entities.Models.OrderStatus.Processing => "bg-primary",
+        Entities.Models.OrderStatus.Shipped => "bg-info",
+        Entities.Models.OrderStatus.Delivered => "bg-success",
+        Entities.Models.OrderStatus.Cancelled => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+<h2 class="fw-bold mb-4">Order #@Model.OrderNumber</h2>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="row g-3 mb-4">
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="text-muted small">Date</div>
+                    <div class="fw-semibold">@Model.OrderDate.ToString("MMM dd, yyyy")</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="text-muted small">Status</div>
+                    <div><span class="badge @badgeClass">@Model.Status</span></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="text-muted small">Total</div>
+                    <div class="fw-bold fs-5">@Model.TotalAmount.ToString("C")</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-transparent"><h5 class="mb-0">Items</h5></div>
+            <div class="card-body p-0">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-3">Product</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end pe-3">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td class="ps-3">
+                                    <strong>@item.Product.Name</strong>
+                                    <br /><small class="text-muted">SKU: @item.Product.SKU</small>
+                                </td>
+                                <td class="text-center">@item.Quantity</td>
+                                <td class="text-end">@item.UnitPrice.ToString("C")</td>
+                                <td class="text-end pe-3">@item.LineTotal.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Shipping Address</h5>
+                <p class="mb-1">@Model.ShippingAddress.Street</p>
+                <p class="mb-1">@Model.ShippingAddress.City</p>
+                <p class="mb-1">@Model.ShippingAddress.Country</p>
+                @if (!string.IsNullOrEmpty(Model.ShippingAddress.Zip))
+                {
+                    <p class="mb-0 text-muted">@Model.ShippingAddress.Zip</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-outline-primary mt-4">Back to My Orders</a>

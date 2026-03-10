@@ -1,0 +1,32 @@
+@using MCV.ViewModels.ManageCategory
+@model CreateCategoryVM
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-4">Create Category</h3>
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Parent Category</label>
+                        <select asp-for="ParentCategoryId" asp-items="Model.ParentCategories" class="form-select">
+                            <option value="">None (Top Level)</option>
+                        </select>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

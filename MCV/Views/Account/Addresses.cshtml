@@ -1,0 +1,59 @@
+@model IEnumerable<Entities.Models.Address>
+@{
+    ViewData["Title"] = "My Addresses";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">My Addresses</h2>
+    <a asp-action="CreateAddress" class="btn btn-primary btn-sm">Add New Address</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">Country</th>
+                        <th>City</th>
+                        <th>Street</th>
+                        <th>Zip</th>
+                        <th>Default</th>
+                        <th class="text-end pe-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-3">@item.Country</td>
+                            <td>@item.City</td>
+                            <td>@item.Street</td>
+                            <td>@(item.Zip ?? "—")</td>
+                            <td>
+                                @if (item.IsDefault)
+                                {
+                                    <span class="badge bg-success">Default</span>
+                                }
+                            </td>
+                            <td class="text-end pe-3">
+                                <a asp-action="EditAddress" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="DetailsAddress" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                                <a asp-action="DeleteAddress" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Delete this address?')">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <p class="mb-1 fw-semibold">No addresses yet</p>
+                <p class="small">Add your first shipping address above.</p>
+            </div>
+        }
+    </div>
+</div>

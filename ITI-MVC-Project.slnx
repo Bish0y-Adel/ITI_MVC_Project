@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Entities/Entities.csproj" />
+  <Project Path="MCV/MCV.csproj" />
+</Solution>

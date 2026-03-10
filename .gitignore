@@ -1,0 +1,47 @@
+## Ignore Visual Studio temporary files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+bin/
+obj/
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## NuGet packages
+*.nupkg
+packages/
+
+## Logs
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## ASP.NET Secrets
+appsettings.Development.json
+secrets.json
+
+## IIS Express
+.vs/
+iisexpress/
+
+## Entity Framework migrations snapshot
+*.db
+
+## Test results
+TestResults/
+
+## Coverage reports
+coverage/
+
+## Publish output
+publish/

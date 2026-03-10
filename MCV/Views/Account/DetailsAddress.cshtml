@@ -1,0 +1,34 @@
+@model Entities.Models.Address
+@{
+    ViewData["Title"] = "Address Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-4">Address Details</h3>
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Country</dt>
+                    <dd class="col-sm-8">@Model.Country</dd>
+                    <dt class="col-sm-4">City</dt>
+                    <dd class="col-sm-8">@Model.City</dd>
+                    <dt class="col-sm-4">Street</dt>
+                    <dd class="col-sm-8">@Model.Street</dd>
+                    <dt class="col-sm-4">Zip</dt>
+                    <dd class="col-sm-8">@(Model.Zip ?? "—")</dd>
+                    <dt class="col-sm-4">Default</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.IsDefault) { <span class="badge bg-success">Yes</span> } else { <span class="text-muted">No</span> }
+                    </dd>
+                    <dt class="col-sm-4">Created</dt>
+                    <dd class="col-sm-8">@Model.CreatedAt.ToString("MMM dd, yyyy")</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                <a asp-action="EditAddress" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a asp-action="Addresses" class="btn btn-sm btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

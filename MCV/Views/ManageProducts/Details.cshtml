@@ -1,0 +1,43 @@
+@model Entities.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-4">Product Details</h3>
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Name</dt>
+                    <dd class="col-sm-8 fw-semibold">@Model.Name</dd>
+                    <dt class="col-sm-4">SKU</dt>
+                    <dd class="col-sm-8"><code>@Model.SKU</code></dd>
+                    <dt class="col-sm-4">Price</dt>
+                    <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
+                    <dt class="col-sm-4">Stock</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge @(Model.StockQuantity > 0 ? "bg-success" : "bg-danger")">@Model.StockQuantity</span>
+                    </dd>
+                    <dt class="col-sm-4">Active</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.IsActive) { <span class="badge bg-success">Yes</span> } else { <span class="badge bg-secondary">No</span> }
+                    </dd>
+                    <dt class="col-sm-4">Category</dt>
+                    <dd class="col-sm-8">@(Model.Category?.Name ?? "—")</dd>
+                    <dt class="col-sm-4">Created</dt>
+                    <dd class="col-sm-8">@Model.CreatedAt.ToString("MMM dd, yyyy")</dd>
+                    <dt class="col-sm-4">Updated</dt>
+                    <dd class="col-sm-8">@(Model.UpdatedAt?.ToString("MMM dd, yyyy") ?? "—")</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id"
+                   class="btn btn-sm btn-outline-danger"
+                   onclick="return confirm('Delete product @Model.Name?')">Delete</a>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

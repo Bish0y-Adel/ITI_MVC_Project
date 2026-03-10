@@ -1,0 +1,28 @@
+@model Entities.Models.Category
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-4">Category Details</h3>
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Name</dt>
+                    <dd class="col-sm-8 fw-semibold">@Model.Name</dd>
+                    <dt class="col-sm-4">Parent</dt>
+                    <dd class="col-sm-8">@(Model.ParentCategory?.Name ?? "None")</dd>
+                    <dt class="col-sm-4">Created</dt>
+                    <dd class="col-sm-8">@Model.CreatedAt.ToString("MMM dd, yyyy")</dd>
+                    <dt class="col-sm-4">Updated</dt>
+                    <dd class="col-sm-8">@(Model.UpdatedAt?.ToString("MMM dd, yyyy") ?? "—")</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

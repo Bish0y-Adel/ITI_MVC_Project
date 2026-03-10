@@ -1,0 +1,92 @@
+@model MCV.ViewModels.Order.CheckoutVM
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h2 class="fw-bold mb-4">Checkout</h2>
+
+<form asp-action="PlaceOrder" method="post">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-transparent">
+                    <h5 class="mb-0">Order Summary (@Model.ItemCount items)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-3">Product</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end pe-3">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="ps-3">
+                                        <strong>@item.ProductName</strong>
+                                        <br /><small class="text-muted">SKU: @item.SKU</small>
+                                    </td>
+                                    <td class="text-center">@item.Quantity</td>
+                                    <td class="text-end">@item.UnitPrice.ToString("C")</td>
+                                    <td class="text-end pe-3">@item.LineTotal.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">Total</td>
+                                <td class="text-end fw-bold fs-5 pe-3">@Model.Total.ToString("C")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary">Back to Cart</a>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Shipping Address</h5>
+
+                    @if (!Model.Addresses.Any())
+                    {
+                        <div class="alert alert-warning">
+                            No saved addresses.
+                            <a asp-controller="Account" asp-action="CreateAddress" class="alert-link">Add one now</a>.
+                        </div>
+                    }
+                    else
+                    {
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                        @foreach (var addr in Model.Addresses)
+                        {
+                            <div class="form-check border rounded p-3 mb-2">
+                                <input class="form-check-input" type="radio"
+                                       name="ShippingAddressId" id="addr_@addr.Value"
+                                       value="@addr.Value"
+                                       checked="@(addr.Value == Model.ShippingAddressId?.ToString())" />
+                                <label class="form-check-label" for="addr_@addr.Value">
+                                    @addr.Text
+                                </label>
+                            </div>
+                        }
+                        <span asp-validation-for="ShippingAddressId" class="text-danger"></span>
+
+                        <hr />
+                        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+                            <span>Total</span>
+                            <span>@Model.Total.ToString("C")</span>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 btn-lg">Place Order</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
