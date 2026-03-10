@@ -1,6 +1,6 @@
 # MCV Store — ASP.NET Core MVC E-Commerce Application
 
-A full-featured e-commerce web application built with **ASP.NET Core MVC (.NET 10)**, **Entity Framework Core**, and **SQL Server**. Developed as an ITI training project demonstrating clean architecture, identity management, and real-world shopping workflows.
+A Simple e-commerce web application built with **ASP.NET Core MVC (.NET 10)**, **Entity Framework Core**, and **SQL Server**. Developed as an ITI training project demonstrating clean architecture, identity management, and real-world shopping workflows.
 
 ---
 
