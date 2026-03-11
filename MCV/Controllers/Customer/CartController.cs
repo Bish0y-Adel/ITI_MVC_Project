@@ -143,21 +143,11 @@ namespace MCV.Controllers.Customer
         {
             var userId = userManager.GetUserId(User);
 
-            /*            var cart = unitOfWork.CartRepo
-                .Query(c => c.CartItems)
-                .Where(c => c.UserId == userId)
-                .Select(c => new
-                {
-                    Cart = c,
-                    CartItems = c.CartItems.Select(ci => new { ci, ci.Product }).ToList()
-                })
-                .AsEnumerable()
-                .Select(x => x.Cart)
-                .FirstOrDefault();*/
-
             //var cart = unitOfWork.CartRepo.Query(c => c.CartItems, c => c.CartItems.Select(ci => ci.Product)).Where(c => c.UserId == userId).AsEnumerable().FirstOrDefault();
             var cart = unitOfWork.CartRepo
-                        .Query().Include(c => c.CartItems).ThenInclude(ci => ci.Product)
+                        .Query()
+                        .Include(c => c.CartItems)
+                            .ThenInclude(ci => ci.Product)
                         .FirstOrDefault(c => c.UserId == userId);
 
             if (cart != null)

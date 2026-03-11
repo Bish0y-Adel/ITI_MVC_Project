@@ -64,6 +64,10 @@
                     {
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
 
+                        @* <select asp-for="ShippingAddressId" asp-items="Model.Addresses" class="form-select">
+                            <option value="">Select Address</option>
+                        </select> *@
+
                         @foreach (var addr in Model.Addresses)
                         {
                             <div class="form-check border rounded p-3 mb-2">
@@ -76,6 +80,7 @@
                                 </label>
                             </div>
                         }
+
                         <span asp-validation-for="ShippingAddressId" class="text-danger"></span>
 
                         <hr />

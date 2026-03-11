@@ -52,8 +52,11 @@ namespace MCV.Controllers.Admin
                     Text = c.Name
                 })
             };
+
             return View(viewModel);
         }
+
+
         [HttpPost]
         public IActionResult Create(CreateCategoryVM model)
         {
@@ -75,7 +78,7 @@ namespace MCV.Controllers.Admin
                 model.ParentCategories = unitOfWork.CategoryRepo.GetAll().Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
-                    Text = c.Name
+                    Text = c.Name,    
                 });
                 return View(model);
             }
@@ -97,11 +100,14 @@ namespace MCV.Controllers.Admin
                 ParentCategories = unitOfWork.CategoryRepo.GetAll().Where(c => c.Id != category.Id).Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
-                    Text = c.Name
+                    Text = c.Name,
+                    //Selected = (c.Id == category.ParentCategoryId)
+                    
                 })
             };
             return View(viewModel);
         }
+
         [HttpPost]
         public IActionResult Edit(EditCategoryVM model)
         {

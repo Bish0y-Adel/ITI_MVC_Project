@@ -31,7 +31,7 @@ namespace MCV.Controllers.Admin
                 OrderId = o.Id,
                 OrderNumber = o.OrderNumber,
                 TotalAmount = o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price),
-                UserName = o.User.UserName,
+                UserName = o.User.UserName!,
                 OrderDate = o.OrderDate,
                 ShippingAddress = $"{o.ShippingAddress.Street}, {o.ShippingAddress.City}, {o.ShippingAddress.Country}, {o.ShippingAddress.Zip}",
                 StatusNumber = o.Status,
@@ -39,14 +39,24 @@ namespace MCV.Controllers.Admin
                 {
                     Text = s.ToString(),
                     Value = ((int)s).ToString(),
-                    Selected = (s == o.Status)
-
                 }).ToList()
             }).ToList();
 
             return View(orderVM);
         }
 
+        public IActionResult Details(int id)
+        {
+            var order = UnitOfWork.OrderRepo.Query()
+                            .Include(o => o.User)
+                            .Include(o => o.ShippingAddress)
+                            .Include(o => o.OrderItems)
+                                .ThenInclude(oi => oi.Product)
+                            .FirstOrDefault(o => o.Id == id);
+            if (order == null)
+                return NotFound();
+            return View(order);
+        }
 
         [HttpPost]
         public IActionResult UpdateStatus(int orderId, OrderStatus statusNumber)

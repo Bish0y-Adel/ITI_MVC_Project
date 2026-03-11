@@ -43,6 +43,7 @@ else
                                         <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center gap-1">
                                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
                                             <input type="number" name="quantity" value="@item.Quantity"
+                                                                       
                                                    min="1" max="@item.StockQuantity"
                                                    class="form-control form-control-sm" style="width:70px" />
                                             <button type="submit" class="btn btn-sm btn-outline-secondary">Update</button>

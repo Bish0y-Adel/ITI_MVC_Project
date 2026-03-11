@@ -2,6 +2,7 @@
 using Entities.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Entities.Repositories
         EntityRepo<CartItem> CartItemRepo { get; }
 
         int SaveChanges();
+        IDbContextTransaction BeginTransaction();
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -51,6 +53,11 @@ namespace Entities.Repositories
         public int SaveChanges()
         {
             return dbContext.SaveChanges();
+        }
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return dbContext.Database.BeginTransaction();
         }
     }
 }
